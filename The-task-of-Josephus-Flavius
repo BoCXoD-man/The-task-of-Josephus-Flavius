@@ -1,0 +1,32 @@
+# the formula is taken from wikipedia, it will help us in two solutions
+#joseph (n, k) = ( joseph (n-1, k) + k - 1 ) % n + 1 
+
+n, k = int(input()), int(input())
+
+# the first solution is through recursion
+def joseph(n, k):
+    return 1 if n == 1 else (joseph(n - 1, k) + k - 1) % n + 1
+
+# the second solution is through a loop
+def joseph_2(n, k):
+    death = 0
+    for i in range(1,n+1):
+        death = (death+k)%i
+    return death+1
+    
+# But this all came to mind after solving through the list and "removing the dead":
+def joseph_3(n, k):
+    lst = [i for i in range(1, n + 1)]
+    while len(lst) != 1:
+        for i in range(0, k-1):
+            lst.append(lst[i])
+        del lst[0:k]
+    return (lst[0])
+    
+# This solution is just as interesting as the first two. 
+# But in its own way: the first two used Google and Wikipedia, the last solution did not use third-party knowledge.
+
+# test     
+print (joseph(n, k))
+print (joseph_2(n, k))
+print (joseph_3(n, k))
